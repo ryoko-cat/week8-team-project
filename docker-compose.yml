@@ -4,43 +4,41 @@ volumes:
   mysql-volume:
 
 services:
-  app:
+  frontend:
+    image: node:lts
+    container_name: frontend
+    ports:
+      - ${FRONTEND_PORT}:8080
+    volumes:
+      - ./:/src
+    working_dir: "/src/vuejs"
+    tty: true
+
+  backend:
     build:
       context: .
       dockerfile: ./docker/php/Dockerfile
     volumes:
-      - ./src/:/var/www/html
-    environment:
-      - DB_CONNECTION=mysql
-      - DB_HOST=db
-      - DB_PORT=3306
-      - DB_DATABASE=${DB_NAME}
-      - DB_USERNAME=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-
-  web:
+      - ./laravel/:/var/www/html
+  
+  nginx:
     build:
       context: .
       dockerfile: ./docker/nginx/Dockerfile
     ports:
-      - ${WEB_PORT}:80
+      - ${BACKEND_PORT}:80
     depends_on:
-      - app
+      - backend
     volumes:
-      - ./src/:/var/www/html
+      - ./laravel/:/var/www/html
 
-  db:
+  database:
+    build: ./docker/db
     platform: linux/x86_64
-    build:
-      context: .
-      dockerfile: ./docker/mysql/Dockerfile
+    container_name: database
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: rentalApp_db
+      TZ: "Asia/Tokyo"
     ports:
       - ${DB_PORT}:3306
-    environment:
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      TZ: 'Asia/Tokyo'
-    volumes:
-      - mysql-volume:/var/lib/mysql
