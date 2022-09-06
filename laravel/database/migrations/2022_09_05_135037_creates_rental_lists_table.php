@@ -17,7 +17,7 @@ class CreatesRentalListsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('item_id');
             $table->date('lending_date');
-            $table->date('back_date');
+            $table->date('back_date')->nullable();;
             $table->unsignedBigInteger('member_id');
             $table->foreign('item_id')->references('id')->on('items');    
             $table->foreign('member_id')->references('id')->on('members');

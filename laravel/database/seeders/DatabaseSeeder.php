@@ -17,5 +17,7 @@ class DatabaseSeeder extends Seeder
         
         //MembersTableSeederを読み込むように指定
         $this->call(MembersTableSeeder::class);
+        $this->call(CategoriesTableSeeder::class);
+        $this->call(PeriodsTableSeeder::class);
     }
 }
