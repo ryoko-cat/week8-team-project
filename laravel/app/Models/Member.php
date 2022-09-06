@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Member extends Model
 {
     use HasFactory;
+    public $timestamps = false;
+
+    public function rentalLists() {
+        return $this -> hasMany(rentalList::class);
+    }
 }

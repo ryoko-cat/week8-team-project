@@ -15,10 +15,11 @@ class CreateItemsTable extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('title');
             $table->string('description');
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('period_id');
+            $table->boolean('status')->default(false);
             $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('period_id')->references('id')->on('periods');            
         });
