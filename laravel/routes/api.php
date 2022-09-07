@@ -7,6 +7,7 @@ use App\Http\Controllers\aboutItemController;
 use App\Http\Controllers\RentalListController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PeriodController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,3 +32,6 @@ Route::post('rentalList', [rentalListController::class, 'store']);
 // Route::resourse('backItem', [PatchController::class, 'update']);
 Route::get('category', [CategoryController::class, 'index']);
 Route::get('period', [PeriodController::class, 'index']);
+
+Route::get('/signup', [AuthController::class, 'signup']);
+Route::post('/signup', [AuthController::class, 'signup']);

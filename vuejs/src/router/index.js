@@ -3,7 +3,7 @@ import RouterTestFirst from '@/components/RouterTestFirst.vue'
 import RouterTestSecond from '@/components/RouterTestSecond.vue'
 import RouterTestThird from '@/components/RouterTestThird.vue'
 import RouterTestFourth from '@/components/RouterTestFourth.vue'
-
+import SignUp from '@/components/SignUp.vue'
 
 const routes = [
   {
@@ -25,6 +25,11 @@ const routes = [
     path: '/fourth',
     name: 'routerTestFourth',
     component: RouterTestFourth
+  },
+  {
+    path: '/signup',
+    name: 'SignUp',
+    component: SignUp
   }
 ]
 
