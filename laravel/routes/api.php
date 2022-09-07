@@ -3,6 +3,11 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\aboutItemController;
+use App\Http\Controllers\RentalListController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PeriodController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,3 +22,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('items', [aboutItemController::class, 'index']); //localhost:8000/itemsにGETリクエストがきたら、ItemControllerのAllitemsメソッドに処理を振り分け
+Route::get('items/{id}', [aboutItemController::class, 'show']);
+Route::post('items', [aboutItemController::class, 'store']);
+Route::get('rentalList', [rentalListController::class, 'index']);
+Route::get('rentalList/{id}', [rentalListController::class, 'show']);
+Route::post('rentalList', [rentalListController::class, 'store']);
+// Route::resourse('backItem', [PatchController::class, 'update']);
+Route::get('category', [CategoryController::class, 'index']);
+Route::get('period', [PeriodController::class, 'index']);
