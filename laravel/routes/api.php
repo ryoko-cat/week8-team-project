@@ -29,7 +29,7 @@ Route::post('items', [aboutItemController::class, 'store']);
 Route::get('rentalList', [rentalListController::class, 'index']);
 Route::get('rentalList/{id}', [rentalListController::class, 'show']);
 Route::post('rentalList', [rentalListController::class, 'store']);
-// Route::resourse('backItem', [PatchController::class, 'update']);
+Route::put('backItem/{id}', [rentalListController::class, 'update']);
 Route::get('category', [CategoryController::class, 'index']);
 Route::get('period', [PeriodController::class, 'index']);
 
