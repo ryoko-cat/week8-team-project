@@ -9,11 +9,12 @@ export default function Signup() {
   function handleSubmit(e) {
     e.preventDefault();
     const data = {
-      "name": name,
-      "email": email,
-      "password": password
+      name: name,
+      email: email,
+      password: password,
+      role: 2, // デフォルト値を2
     };
-    axios.post(`http://127.0.0.1:8000/api/signup`, data)
+    axios.post(`http://localhost:8000/api/signup`, data)
     .then((res) => {
       console.log(res);
     })

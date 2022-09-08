@@ -33,5 +33,8 @@ Route::put('backItem/{id}', [rentalListController::class, 'update']);
 Route::get('category', [CategoryController::class, 'index']);
 Route::get('period', [PeriodController::class, 'index']);
 
-Route::get('/signup', [AuthController::class, 'signup']);
-Route::post('/signup', [AuthController::class, 'signup']);
+Route::post('/signup', [AuthController::class, 'signupMember']);
+Route::get('/member', [AuthController::class, 'getAllMembers']);
+Route::get('/member/{id}', [AuthController::class, 'getMember']);
+Route::put('/member/{id}', [AuthController::class, 'updateMember']);
+Route::delete('/member/{id}', [AuthController::class, 'deleteMember']);

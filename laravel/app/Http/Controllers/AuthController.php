@@ -3,79 +3,74 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Member;
 
 class AuthController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function getAllMembers()
     {
-        echo 'Hello';
+        $member = Member::get()->toJson(JSON_PRETTY_PRINT);
+        return response($member, 200);
     }
 
-     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function signup(Request $request)
+    public function getMember($id)
     {
-        $password = password_hash($request->input('password'), PASSWORD_DEFAULT);
-        echo $password;
-        print $password;
-        return 'hello';
-
-        // $member = Member::create($request->all());
-        // return response()->json(
-        //     $member, 201
-        // );
+        if (Member::where('id', $id)->exists()) {
+            $member = Member::where('id', $id)->get()->toJson(JSON_PRETTY_PRINT);
+            return response($member, 200);
+          } else {
+            return response()->json([
+              "message" => "Member not found"
+            ], 404);
+          }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function signupMember(Request $request)
     {
-        //
+        $member = new Member;
+        $member->name = $request->name;
+        $member->email = $request->email;
+        $member->password = password_hash($request->input('password'), PASSWORD_DEFAULT);
+        $member->role = $request->role;
+        $member->save();
+
+        return response()->json([
+            "message" => "member record created"
+        ], 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function updateMember(Request $request, $id)
     {
-        //
+        // roleのみを変更できる想定
+        if (Member::where('id', $id)->exists()) {
+            $member = Member::find($id);
+            $member->role = is_null($request->role) ? $member->role : $request->role;
+            $member->save();
+      
+            return response()->json([
+                "message" => "records updated successfully"
+            ], 200);
+            } else {
+            return response()->json([
+                "message" => "Member not found"
+            ], 404);
+              
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function deleteMember($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        if(Member::where('id', $id)->exists()) {
+            $member = Member::find($id);
+            $member->delete();
+      
+            return response()->json([
+              "message" => "records deleted"
+            ], 202);
+          } else {
+            return response()->json([
+              "message" => "Member not found"
+            ], 404);
+          }
     }
 }
