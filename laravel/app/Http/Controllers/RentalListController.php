@@ -32,16 +32,14 @@ class RentalListController extends Controller
         if($item["status"] === 0){
             DB::transaction(function () use ($request, $item) {
                 $item->status = 1;
-                $item->save();//->lockForUpdate();
+                $item->save();
 
                 $rentalList = new RentalList();
                 $rentalList->item_id = $request->item_id;
                 $rentalList->lending_date = $request->lending_date;
                 $rentalList->member_id = $request->member_id;
                 $rentalList->save();
-                return response()->json([
-                    "message" => "Item status was changed. RentalList record created"
-                    ], 201);
+                return response()->json(compact('rentalList'), 200);
                 }, 5);
             }else{
                 return response()->json([
@@ -78,22 +76,17 @@ class RentalListController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $rentalList = RentalList::find($id);//idに一致するオブジェクトを取得
-        // $rentalList->back_date = $request->back_date;
-        // $item = Item::find($id);
-        // $item->status =  $request->status;
-
         DB::transaction(function () use ($request, $id) {
             $rentalList = RentalList::find($id);//idに一致するオブジェクトを取得
             $rentalList->back_date = $request->back_date;
-            $rentalList->save()/*->lockForUpdate()*/;
+            $rentalList->save();
 
             $item = Item::find($rentalList["item_id"]);
             $item->status = $request->status;
             $item->save();
             return response()->json([
                 "message" => "Item status was changed. RentalList was uploaded"
-                ], 201);
+                ]);
     }, 5); //デッドロック発生時のトランザクション再試行回数を指定
     }
 

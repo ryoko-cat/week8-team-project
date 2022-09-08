@@ -29,16 +29,21 @@ class aboutItemController extends Controller
     public function store(Request $request) //post
     {
         $item = new Item();
-        $item->title = $request->title;
-        $item->description = $request->description;
-        $item->category_id = $request->category_id;
-        $item->period_id = $request->period_id;
-        $item->save();
-
-        return response()->json([
-            "message" => "Item record created"
-        ], 201);
-
+        if(is_string($request->title) && is_string($request->description)) {
+            $item->title = $request->title;
+            $item->description = $request->description;
+            $item->category_id = $request->category_id;
+            $item->period_id = $request->period_id;
+            $item->save();
+            return response()->json([
+                "message" => "Item record created"
+            ], 201);
+    
+        }else{
+            return response()->json([
+                "message" => "no created"
+            ]);
+        }
     }
 
     /**
