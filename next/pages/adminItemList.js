@@ -49,7 +49,7 @@ const Home = ({ data }) => {
      <div>
         {data.items.map((d) => (
         <ul key={d.id}>
-            タイトル：{d.title}<br/><br/>貸出状況：{d.status}<br/><br/>借りている人：{rental.name}<br/><br/>借りた日：<br/><br/>返却日:<br/><br/><hr/>
+            タイトル：{d.title}<br/><br/>貸出状況：{d.status}<br/><br/><hr/>
         </ul>
         ))}
     </div>
