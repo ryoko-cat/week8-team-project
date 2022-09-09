@@ -8,8 +8,7 @@ export default function ItemPost() {
     const [category, setcategory] = useState("");
     const [period, setperiod] = useState("");
 
-    function handleSubmit(e) {
-        e.preventDefault();
+    function handleSubmit() {
         const data = {
             "title":item,
             "description":description,
@@ -17,13 +16,11 @@ export default function ItemPost() {
             "period_id":period,
             "status":0
         };
-        axios.post(`http://127.0.0.1:8000/api/items`, data)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+
+        axios.post(`http://127.0.0.1:8000/api/items`, data, { withCredentials: true })
+          .then((res) => {
+            console.log(res);
+          })
       }
 
     return(
@@ -55,7 +52,7 @@ export default function ItemPost() {
             <br></br>
             <label>期限</label>
             <select value={period} onChange={(e) => setperiod(e.target.value)}>
-                <option value="A">期限</option>
+                <option value="A">期間</option>
                 <option value={1}>7日間</option>
                 <option value={2}>14日間</option>
                 <option value={3}>21日間</option>
@@ -66,7 +63,7 @@ export default function ItemPost() {
             <button onClick = {handleSubmit}>追加！</button>
             </div>
             <hr/>
-            <Link href={"adminItemList"}>すべての本の貸出状況</Link>
+            <Link href={"/adminItemList"}>すべての本の貸出状況</Link>
             <br></br>
             <Link href={"/memberList"}>利用者一覧</Link>
         </div>       
