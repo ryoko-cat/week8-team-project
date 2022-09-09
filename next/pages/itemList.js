@@ -38,7 +38,15 @@ export async function getServerSideProps() {
   };
 }
 
-const borrow = (id, status, period) => {
+let member = "";
+
+axios.get('http://localhost:8000/api/users', { withCredentials: true }).then((res) => {
+ member =  res.data.id
+      console.log(res.data)
+  })
+  
+
+const borrow = (id, status) => {
     const day = new Date()
 
     const formatDate = (current_datetime)=>{
@@ -50,10 +58,10 @@ const borrow = (id, status, period) => {
         "item_id": id,
         "lending_date": formatDate(day),
         "back_date":null,
-        "member_id": 1  
+        "member_id": member 
     };
 
-    axios.post(`http://localhost:8000/api/rentalList`, list)
+    axios.post(`http://localhost:8000/api/rentalList`, list,  { withCredentials: true })
     .then((res) => {
       console.log(res);
     })
@@ -79,7 +87,7 @@ const Home = ({ data }) => {
         {data.items.map((d) => (
         <ul key={d.id}>
             題名：{d.title}<br/><br/>説明：{d.description}<br/><br/>貸出状況：{d.status}<br/><br/>借りれる期間：{d.period_id}<br/><br/>
-            <button onClick={() => borrow(d.id, d.status, d.period_id)} disabled={d.status === 1}>借りる</button><hr/>
+            <button onClick={() => borrow(d.id, d.status)} disabled={d.status === 1}>借りる</button><hr/>
         </ul>
         ))}
     </div>
