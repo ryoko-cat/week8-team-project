@@ -56,8 +56,8 @@ class RentalListController extends Controller
      */
     public function show($id)
     {
-        if (RentalList::where('id', $id)->exists()) {
-            $rentalList = RentalList::where('id', $id)->get();
+        if (RentalList::where('member_id', $id)->exists()) {
+            $rentalList = RentalList::where('member_id', $id)->get();
             return response()->json(compact('rentalList'),200);
           } else {
             return response()->json([

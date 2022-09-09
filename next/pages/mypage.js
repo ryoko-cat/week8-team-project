@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 export async function getServerSideProps() {
 
-const rentals = await fetch("http://nginx:80/api/rentalList");
+const rentals = await fetch("http://nginx:80/api/rentalList");//最後にmember_idつけてその人だけの情報が取れるように?
 const rental = await rentals.json();
 
 const items = await fetch("http://nginx:80/api/items");
