@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class MembersTableSeeder extends Seeder
 {
@@ -20,7 +21,7 @@ class MembersTableSeeder extends Seeder
         $members = [
             ['name' => 'adimin',
              'email' => "msE@mse.com",
-             'password' => "password",
+             'password' => Hash::make("password"),
              'role' => 1]
         ];
         

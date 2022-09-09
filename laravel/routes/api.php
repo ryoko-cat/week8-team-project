@@ -8,6 +8,7 @@ use App\Http\Controllers\RentalListController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MemberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,8 +34,10 @@ Route::put('backItem/{id}', [rentalListController::class, 'update']);
 Route::get('category', [CategoryController::class, 'index']);
 Route::get('period', [PeriodController::class, 'index']);
 
-Route::post('/signup', [AuthController::class, 'signupMember']);
-Route::get('/member', [AuthController::class, 'getAllMembers']);
-Route::get('/member/{id}', [AuthController::class, 'getMember']);
-Route::put('/member/{id}', [AuthController::class, 'updateMember']);
-Route::delete('/member/{id}', [AuthController::class, 'deleteMember']);
+Route::post('/signup', [AuthController::class, 'signup']);
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::get('/member', [MemberController::class, 'getAllMembers']);
+Route::get('/member/{id}', [MemberController::class, 'getMember']);
+Route::put('/member/{id}', [MemberController::class, 'updateMember']);
+Route::delete('/member/{id}', [MemberController::class, 'deleteMember']);
