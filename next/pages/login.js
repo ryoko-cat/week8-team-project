@@ -23,10 +23,10 @@ export default function Signup() {
             console.log(res.data);
             // roleが1なら管理者、2ならTOPページ
             if(res.data.role === '1') {
-                Router.push('/') // 管理者ページのURL
+                Router.push(`/admin`) // 管理者ページのURL
                 alert('ログインしました');
             } else if(res.data.role === '2') {
-                Router.push('/') // TOPページのURL
+                Router.push(`/mypage`) // TOPページのURL
                 alert('ログインしました');
             }
           })

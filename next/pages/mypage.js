@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import axios from "axios";
-import { useState } from 'react';
 
 export async function getServerSideProps() {
 
@@ -69,23 +68,39 @@ console.log(data);
       }
 
 
-    async function backBook (id) {
-        await fetch(`http://localhost:8000/api/backItem/${id}`,{
-            mode:'cors',
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'User-Agent': '*',
-            }, 
-            body:JSON.stringify({
-                'back_date':formatDate(new Date()),
-                "status": false
-            })
-         })
-          .then(() => window.location.reload())  
+    // async function backBook (id) {
+    //     await fetch(`http://localhost:8000/api/backItem/${id}`,{ withCredentials: true },{
+    //         mode:'cors',
+    //         method: 'PUT',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Accept': 'application/json',
+    //             'User-Agent': '*',
+    //         }, 
+    //         body:JSON.stringify({
+    //             'back_date':formatDate(new Date()),
+    //             "status": false
+    //         })
+    //      })
+    //       //.then(() => window.location.reload())  
+    // }
+    const bookdata = {
+        "back_date":formatDate(new Date()),
+        "status": false
     }
+    async function backBook (id) {
+        await axios.put(`http://localhost:8000/api/backItem/${id}`,bookdata, { withCredentials: true} )
+          .then((res) => {
+            console.log(res);
+          })
+          .then(() => {window.location.reload()})
+          .catch((error) => {
+            console.log(error);
+          });
 
+
+    }
+    
     const limit =items.map((item, index) => {
         for(let i= 0; i<itemPeriod.length; i++){
             if(periodResult[i] === item.period_id){
