@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import Link from 'next/link';
+import Router from 'next/router';
 
 export default function Signup() {
   const [name, setName] = useState("");
@@ -18,6 +19,7 @@ export default function Signup() {
     axios.post(`http://localhost:8000/api/signup`, data, { withCredentials: true })
     .then((res) => {
       console.log(res);
+      Router.push(`/login`)
     })
     .catch((error) => {
       console.log(error);
