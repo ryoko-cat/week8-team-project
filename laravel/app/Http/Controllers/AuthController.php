@@ -43,7 +43,7 @@ class AuthController extends Controller
 
     }
 
-    public function show()
+    public function showAuth()
     {
         return Auth::user();
     }

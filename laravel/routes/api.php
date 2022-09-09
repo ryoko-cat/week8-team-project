@@ -36,6 +36,7 @@ Route::get('period', [PeriodController::class, 'index']);
 
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::get('/users', [AuthController::class, 'showAuth']);
 
 Route::get('/member', [MemberController::class, 'getAllMembers']);
 Route::get('/member/{id}', [MemberController::class, 'getMember']);

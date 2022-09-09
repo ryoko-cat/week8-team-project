@@ -39,8 +39,8 @@ export default function Signup() {
 
   // SPA認証済みではないとアクセスできないAPI
   const handleUserClick = () => {
-    axios.get('http://localhost:8000/api/user', { withCredentials: true }).then((response) => {
-      console.log(response.data)
+    axios.get('http://localhost:8000/api/user', { withCredentials: true }).then((res) => {
+      console.log(res.data)
     })
   }
 
