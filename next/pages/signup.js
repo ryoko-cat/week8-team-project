@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import Link from 'next/link';
 
 export default function Signup() {
   const [name, setName] = useState("");
@@ -14,7 +15,7 @@ export default function Signup() {
       password: password,
       role: 2, // デフォルト値を2
     };
-    axios.post(`http://localhost:8000/api/signup`, data)
+    axios.post(`http://localhost:8000/api/signup`, data, { withCredentials: true })
     .then((res) => {
       console.log(res);
     })
@@ -26,13 +27,22 @@ export default function Signup() {
   return (
     <>
     <form>
+      <div>
         <label>name:</label>
         <input type="name" onChange={(e) => setName(e.target.value)}/>
+      </div>
+      <div>
         <label>email:</label>
         <input type="email" onChange={(e) => setEmail(e.target.value)}/>
+      </div>
+      <div>
         <label>password:</label>
         <input type="password"  onChange={(e) => setPassword(e.target.value)}/>
+      </div>
         <button onClick={handleSubmit}>新規登録</button>
+      <div>
+        <Link href="/login"><a>ログインはこちら</a></Link>
+      </div>
     </form>
     </>
   )

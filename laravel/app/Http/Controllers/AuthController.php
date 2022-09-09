@@ -29,34 +29,23 @@ class AuthController extends Controller
     public function login(Request $request)
     {
 
-        Log::warning('ログサンプル', ['memo' => 'sample1']);
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => 'required',
         ]);
 
-        Log::warning($credentials, ['memo' => 'sample1']);
-        // Log::warning("start");
-        // Log::warning(Auth::attempt($credentials));
-        // Log::warning("end");
-        $members = Member::find(1);
-        Log::warning($members);
-        Auth::login($members);
-        Log::warning(Auth::login($members));
-        Log::warning(Auth::attempt($request->only('email', 'password')));
-        if (Auth::login($members)) {
-            Log::warning('if');
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return response()->json(['name' => Auth::user()->email], 200);
+            return response()->json(['user_id' => Auth::user()->id, 'role' => Auth::user()->role], 200);
         }
 
-        Log::warning('テスト');
         throw new Exception('ログインに失敗しました。再度お試しください');
 
+    }
 
-
-        // $password = password_verify();
-
+    public function show()
+    {
+        return Auth::user();
     }
 
 }

@@ -1,5 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
+import Router from 'next/router';
+import Link from 'next/link';
 
 export default function Signup() {
   const [email, setEmail] = useState("");
@@ -19,9 +21,19 @@ export default function Signup() {
           .post(`http://localhost:8000/api/login`, data, { withCredentials: true })
           .then((res) => {
             console.log(res.data);
-            // レスポンスがOKなら別ページにリダイレクトさせる（roleが1なら管理者、2ならTOPページ）
+            // roleが1なら管理者、2ならTOPページ
+            if(res.data.role === '1') {
+                Router.push('/') // 管理者ページのURL
+                alert('ログインしました');
+            } else if(res.data.role === '2') {
+                Router.push('/') // TOPページのURL
+                alert('ログインしました');
+            }
           })
-
+          .catch((error) => {
+            console.error(error);
+            alert('ログインに失敗しました。再度お試しください');
+          });
       })
   }
 
@@ -46,8 +58,11 @@ export default function Signup() {
       <div>
         <button onClick={handleClick}>ログイン</button>
       </div>
-      <div>
+      {/* <div>
         <button onClick={handleUserClick}>ユーザー情報を取得</button>
+      </div> */}
+      <div>
+      <Link href="/signup"><a>新規登録はこちら</a></Link>
       </div>
     </form>
     </>
