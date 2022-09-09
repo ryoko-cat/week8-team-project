@@ -38,13 +38,6 @@ export async function getServerSideProps() {
   };
 }
 
-let member = "";
-
-axios.get('http://localhost:8000/api/users', { withCredentials: true }).then((res) => {
- member =  res.data.id
-      console.log(res.data)
-  })
-  
 
 const borrow = (id, status) => {
     const day = new Date()
@@ -58,7 +51,7 @@ const borrow = (id, status) => {
         "item_id": id,
         "lending_date": formatDate(day),
         "back_date":null,
-        "member_id": member 
+        "member_id":2
     };
 
     axios.post(`http://localhost:8000/api/rentalList`, list,  { withCredentials: true })
